@@ -10,10 +10,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist \
-    && php artisan config:cache \
-    && php artisan route:cache
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 ENV PORT=8080
 EXPOSE 8080
-CMD php artisan serve --host=0.0.0.0 --port=$PORT
+CMD php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan serve --host=0.0.0.0 --port=$PORT
